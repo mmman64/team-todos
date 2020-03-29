@@ -10,11 +10,13 @@ import { ApolloLink, Observable } from 'apollo-link';
 export const createCache = () => {
   const cache = new InMemoryCache();
 
-  process.env.ApolloClient = {NODE_ENV: 'production'};
+  // process.env.ApolloClient = {NODE_ENV: 'production'};
+  process.env.ApolloClient = {NODE_ENV: 'development'};
 
   if (process.env.ApolloClient.NODE_ENV === "development") {
     window.cacheApolloCache = cache;
   }
+
   return cache;
 };
 
