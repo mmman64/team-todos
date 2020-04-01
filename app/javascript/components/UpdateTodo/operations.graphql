@@ -1,0 +1,17 @@
+mutation UpdateTodoMutation(
+  $id: ID!
+  $title: String!
+  $description: String
+) {
+  updateTodo(
+    id: $id
+    title: $title
+    description: $description
+  ) {
+    todo {
+      id
+      title
+      description
+    }
+  }
+}

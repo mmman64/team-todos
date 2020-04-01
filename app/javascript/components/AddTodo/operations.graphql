@@ -1,0 +1,13 @@
+mutation AddTodoMutation($title: String! $description: String) {
+  addTodo(title: $title, description: $description) {
+    todo {
+      id
+      title
+      description
+      user {
+        id
+        email
+      }
+    }
+  }
+}
