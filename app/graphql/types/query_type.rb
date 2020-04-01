@@ -18,5 +18,13 @@ module Types
     def todo(id: )
       Todo.find(id)
     end
+
+    field :me, Types::UserType, null: true
+
+    #  returns the current_user from the execution context
+    def me
+      context[:current_user]
+    end
+
   end
 end

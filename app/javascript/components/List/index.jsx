@@ -1,31 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { ListQuery } from "./operations.graphql";
+import UpdateTodo from "../UpdateTodo";
 
-const ListQuery = gql`
-  {
-    todos {
-      id
-      title
-      user {
-        email
-      }
-    }
-  }
-`;
+const List = () => {
+  const [todo, setTodo] = useState(null);
 
-export default () => (
-  <Query query={ListQuery}>
-    {({ data, loading }) => (
-      <div>
-        {loading
-          ? "loading..."
-          : data.todos.map(({ title, id, user }) => (
-              <div key={id}>
-                <b>{title}</b> {user && `added by ${user.email}`}
-              </div>
-            ))}
-      </div>
-    )}
-  </Query>
-);
+  return (
+    <Query query={ListQuery}>
+      {({ data, loading }) => (
+        <div>
+          {loading || !data.todos
+            ? "loading..."
+            : data.todos.map(({ title, id, user, description }) => (
+                <button
+                  onClick={() => setTodo({ title, id, description })}
+                  key={id}
+                >
+                  <div>{title}</div>
+                  <div>{description}</div>
+                  {user ? (
+                    <div>added by {user.email}</div>
+                    ) : null}
+                </button>
+              ))}
+          {todo !== null && (
+            <UpdateTodo
+              id={todo.id}
+              initialTitle={todo.title}
+              initialDescription={todo.description}
+              onClose={() => setTodo(null)}
+            />
+          )}
+        </div>
+      )}
+    </Query>
+  );
+};
+
+export default List;
