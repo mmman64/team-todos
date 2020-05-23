@@ -1,3 +1,3 @@
 # README
 
-Amending authoring
+Fixed authoring
